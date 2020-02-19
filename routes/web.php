@@ -18,3 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//RUTAS PARA SPECIALTY
+
+Route::get('specialties', 'SpecialtyController@index')->name('specialties.index');
+Route::get('specialties/create', 'SpecialtyController@create')->name('specialties.create');
+//Route::get('specialties/{speciality}/edit', 'SpecialtyController@edit');
+Route::post('specialties/store', 'SpecialtyController@store')->name('specialties.store');
+Route::get('specialties/{specialty}/edit', 'SpecialtyController@edit')->name('specialties.edit');
+Route::put('specialties/{specialty}/update', 'SpecialtyController@update')->name('specialties.update');
+Route::delete('specialties/{specialty}/delete', 'SpecialtyController@destroy')->name('specialties.delete');

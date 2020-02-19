@@ -7,7 +7,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="./examples/icons.html">
+    <a class="nav-link " href="{{route('specialties.index')}}">
         <i class="ni ni-planet text-blue"></i> Especialidades
       </a>
     </li>
