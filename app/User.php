@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'dni','address','phone','role',
     ];
 
     /**
@@ -26,6 +26,8 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+        // ESTO SON LOS CAMPOS QUE SE PUEDEN ASIGNAR DE FORMA MASIVA, NO QUEREMOS QUE EL ROL
+        // SE SIGNE DE FORMA MASIVA POR ESO NO LO PONEMOS EN ESTE ARRAY
     ];
 
     /**
@@ -36,4 +38,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    function scopeDoctors($query){
+        return $query->where('role','doctor');
+    }
+    function scopePatients($query){
+        return $query->where('role','patient');
+    }
 }

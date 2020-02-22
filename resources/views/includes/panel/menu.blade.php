@@ -2,7 +2,7 @@
 <h6 class="navbar-heading text-muted">Gestionar Datos</h6>
 <ul class="navbar-nav">
     <li class="nav-item  active ">
-      <a class="nav-link  active " href="./index.html">
+      <a class="nav-link  active " href="/home">
         <i class="ni ni-tv-2 text-primary"></i> Dashboard
       </a>
     </li>
@@ -12,12 +12,12 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="./examples/maps.html">
+      <a class="nav-link "  href="{{route('doctors.index')}}">
         <i class="ni ni-single-02 text-orange"></i>  Medicos
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="./examples/profile.html">
+      <a class="nav-link " href="{{route('patients.index')}}">
         <i class="ni ni-satisfied text-info"></i>  Pacientes
       </a>
     </li>
