@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\User;
+
+
+
 class DoctorController extends Controller
 {
     // todas las rutas que resuelva este controlador va exigir al usuario haber iniciado Session
@@ -14,7 +18,7 @@ class DoctorController extends Controller
     }
     function index(){
        //$specialities=Speciality::all();
-       $doctors=User::doctors()->get();
+       $doctors=User::doctors()->paginate(10);
        return view('doctors.index',compact('doctors'));
     }
     function create(){

@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
+
 
 use Illuminate\Http\Request;
 use App\User;
+
 class PatientController extends Controller
 {
     // todas las rutas que resuelva este controlador va exigir al usuario haber iniciado Session
@@ -50,18 +53,31 @@ class PatientController extends Controller
             'name' => 'required|min:3',
         ];
         $messages=[
-            'name.required' => 'Es necesario ingresar un nombre',
+            'name.required' => 'Es necesario ingresar un nombre',  
             'name.min' => 'Es necesario ingresar un nombre',
         ];
         // EL TERCER PARAMETRO DE LOS MENSAJES ES OPCIONAL
         $this->validate($request,$rules,$messages);
     }
     function update(Request $request,User $patient){
-        $this->performValidation($request);
-        $patient->name=$request->name;
-        $patient->description=$request->description;
-        $patient->update();
-        $notification = 'La especialidad ha sido actualizada';
+        $this->performValidation($request); //validation rules
+        /* if($request->password){
+            $patient->password= bcrypt($request->password);
+            }
+         
+            $patient->name=$request->name;
+            $patient->email=$request->email;
+            $patient->dni=$request->dni;
+            $patient->address=$request->address; 
+            $patient->phone=$request->phone;
+            $patient->update();
+        */
+        $data=  $request->only('name','email','dni','address','phone');
+        $password= $request->password;
+        if($password) $data['password'] = bcrypt($password);
+        $patient->fill($data);
+        $patient->save(); // para guardar los cambios despues de haber usado el "fill" 
+        $notification = 'Los datos del pacient han sido actualizados';
         return \redirect()->route('patients.index')->with(compact('notification'));
     }
     function destroy(User $patient){

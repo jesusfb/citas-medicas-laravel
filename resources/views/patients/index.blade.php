@@ -10,7 +10,7 @@
         </div>
         <div class="col text-right">
         <a href="{{route('patients.create')}}" class="btn btn-sm btn-success">
-              Nuevo paciente
+              Nuevo Paciente
           </a>
         </div>
       </div>

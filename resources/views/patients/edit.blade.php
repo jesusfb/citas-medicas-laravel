@@ -25,8 +25,9 @@
             </ul>
           </div>
          @endif  
-          <form action="{{ route('patients.store') }}" method="POST">
+          <form action="{{ route('patients.update' , $patient->id) }}" method="POST">
             @csrf 
+            @method('PUT')
             <div class="form-group">
                   <label for="">Nombre del Paciente</label>
                   <input type="text" name="name" class="form-control" placeholder="Ingresa el Nombre" value="{{old('name',$patient->name)}}" required >
@@ -45,11 +46,11 @@
              </div>
              <div class="form-group">
               <label for="">Teléfono</label>
-                <input type="number" name="phone" class="form-control" placeholder="Ingresa tu Telefono" value="{{old('phone',$patient->phone)}}" required >
+                <input type="number" name="phone" class="form-control" placeholder="Ingresa tu Telefono" value="{{old('phone',$patient->phone)}}"  >
              </div>
              <div class="form-group">
               <label for="password">Contraseña</label>
-                <input type="password" name="password" class="form-control" placeholder="Ingresa tu Telefono" required >
+                <input type="password" name="password" class="form-control" placeholder="Ingresa tu Telefono"  >
              </div>
              <button type="submit" class="btn btn-primary">Guardar</button>
         </form>

@@ -20,27 +20,34 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 //RUTAS PARA SPECIALTY
 
-//ESPECIALIDADES
-Route::get('specialties', 'SpecialtyController@index')->name('specialties.index');
-Route::get('specialties/create', 'SpecialtyController@create')->name('specialties.create');
-//Route::get('specialties/{speciality}/edit', 'SpecialtyController@edit');
-Route::post('specialties/store', 'SpecialtyController@store')->name('specialties.store');
-Route::get('specialties/{specialty}/edit', 'SpecialtyController@edit')->name('specialties.edit');
-Route::put('specialties/{specialty}/update', 'SpecialtyController@update')->name('specialties.update');
-Route::delete('specialties/{specialty}/delete', 'SpecialtyController@destroy')->name('specialties.delete');
 
-//MEDICOS
-Route::get('doctors', 'DoctorController@index')->name('doctors.index');
-Route::get('doctors/create', 'DoctorController@create')->name('doctors.create');
-Route::post('doctors/store', 'DoctorController@store')->name('doctors.store');
-Route::get('doctors/{doctor}/edit', 'DoctorController@edit')->name('doctors.edit');
-Route::put('doctors/{doctor}/update', 'DoctorController@update')->name('doctors.update');
-Route::delete('doctors/{doctor}/delete', 'DoctorController@destroy')->name('doctors.delete');
 
-//PACIENTES
-Route::get('patients', 'PatientController@index')->name('patients.index');
-Route::get('patients/create', 'PatientController@create')->name('patients.create');
-Route::post('patients/store', 'PatientController@store')->name('patients.store');
-Route::get('patients/{patient}/edit', 'PatientController@edit')->name('patients.edit');
-Route::put('patients/{patient}/update', 'PatientController@update')->name('patients.update');
-Route::delete('patients/{patient}/delete', 'PatientController@destroy')->name('patients.delete');
+
+Route::middleware(['auth', 'admin'])->group( function () {
+//ESPECIALIDADE S
+        Route::get('specialties', 'Admin\SpecialtyController@index')->name('specialties.index');
+        Route::get('specialties/create', 'Admin\SpecialtyController@create')->name('specialties.create');
+        //Route::get('specialties/{speciality}/edit', 'SpecialtyController@edit');
+        Route::post('specialties/store', 'Admin\SpecialtyController@store')->name('specialties.store');
+        Route::get('specialties/{specialty}/edit', 'Admin\SpecialtyController@edit')->name('specialties.edit');
+        Route::put('specialties/{specialty}/update', 'Admin\SpecialtyController@update')
+        ->name('specialties.update');
+        Route::delete('specialties/{specialty}/delete', 'Admin\SpecialtyController@destroy')->name('specialties.delete');
+
+        //MEDICOS
+        Route::get('doctors', 'Admin\DoctorController@index')->name('doctors.index');
+        Route::get('doctors/create', 'Admin\DoctorController@create')->name('doctors.create');
+        Route::post('doctors/store', 'Admin\DoctorController@store')->name('doctors.store');
+        Route::get('doctors/{doctor}/edit', 'Admin\DoctorController@edit')->name('doctors.edit');
+        Route::put('doctors/{doctor}/update', 'Admin\DoctorController@update')->name('doctors.update');
+        Route::delete('doctors/{doctor}/delete', 'Admin\DoctorController@destroy')->name('doctors.delete');
+
+        //PACIENTES
+        Route::get('patients', 'Admin\PatientController@index')->name('patients.index');
+        Route::get('patients/create', 'Admin\PatientController@create')->name('patients.create');
+        Route::post('patients/store', 'Admin\PatientController@store')->name('patients.store');
+        Route::get('patients/{patient}/edit', 'Admin\PatientController@edit')->name('patients.edit');
+        Route::put('patients/{patient}/update', 'Admin\PatientController@update')->name('patients.update');
+        Route::delete('patients/{patient}/delete', 'Admin\PatientController@destroy')->name('patients.delete');
+});
+    

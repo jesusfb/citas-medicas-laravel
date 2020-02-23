@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
+
 
 use Illuminate\Http\Request;
 use App\Specialty;
+
 class SpecialtyController extends Controller
 {
     // todas las rutas que resuelva este controlador va exigir al usuario haber iniciado Session

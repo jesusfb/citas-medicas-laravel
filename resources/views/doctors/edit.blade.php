@@ -46,11 +46,11 @@
              </div>
              <div class="form-group">
               <label for="">Teléfono</label>
-                <input type="number" name="phone" class="form-control" placeholder="Ingresa tu Telefono" value="{{old('phone',  $doctor->phone)}}" required >
+                <input type="number" name="phone" class="form-control" placeholder="Ingresa tu Telefono" value="{{old('phone',  $doctor->phone)}}"  >
              </div>
              <div class="form-group">
                 <label for="">Contraseña</label>
-              <input type="text" name="password" class="form-control" placeholder="Ingresa tu Telefono" value=""  >
+              <input type="text" name="password" class="form-control" placeholder="Ingresa tu Telefono"  >
               <p>Ingrese un valor solo si desea actualizar su contraseña</p>
              </div>
              <button type="text" class="btn btn-primary">Guardar</button>
