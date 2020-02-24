@@ -51,3 +51,14 @@ Route::middleware(['auth', 'admin'])->group( function () {
         Route::delete('patients/{patient}/delete', 'Admin\PatientController@destroy')->name('patients.delete');
 });
     
+
+
+Route::middleware(['auth', 'doctor'])->group( function () {
+    //ESPECIALIDADE S
+            Route::get('schedule', 'Doctor\ScheduleController@edit')->name('schedule.edit');
+            // para consultar su horario actual
+            Route::post('schedule/store', 'Doctor\ScheduleController@store')->name('schedule.store');
+            // para guardar o actualizar su informacion 
+    });
+        
+    

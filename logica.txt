@@ -1,0 +1,5 @@
+Medico
+Gestionar horarios
+Listado de citas y pacientes que el ha atendido o los que va atender
+
+
