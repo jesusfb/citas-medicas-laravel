@@ -63,3 +63,4 @@ Route::middleware(['auth', 'doctor'])->group( function () {
         
 Route::get('appointment', 'AppointmentController@create')->name('appointments.create');
 Route::post('appointments/create', 'AppointmentController@create')->name('appointments.store');
+Route::get('datos/{doctor}', 'Admin\DoctorController@getSpecialties')->name('specialties.getdata');

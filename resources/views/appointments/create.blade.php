@@ -38,8 +38,8 @@
             <div class="form-group">
                <label for="">Médico</label>
                <select name="medico" id="medico" class="form-control">
-                        
-                </select>
+                              
+              </select>
            </div>
             <div class="form-group">
                <label for="">Fecha</label>
@@ -70,6 +70,5 @@
 </div>
 @endsection
 @section('scripts')
-  <script src="{{asset('js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-  
+<script src="{{asset('js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 @endsection

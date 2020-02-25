@@ -1,5 +1,11 @@
 @extends('layouts.panel')
+@section('styles')
+{{-- ESTOS CDN LOS COPIAMOS DE LA PAGINA OFICINAL DE BOOSTRAP-SELECT --}}
+{{-- https://developer.snapappointments.com/bootstrap-select/ --}}
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.min.css">
+<!-- Latest compiled and minified JavaScript -->
+@endsection
 @section('content')
 
 <div class="card shadow">
@@ -29,8 +35,17 @@
             @csrf 
             @method('PUT')
             <div class="form-group">
+            <input id="doctor_id" name="doctor_id" type="hidden" value="{{$doctor->id}}">
                   <label for="">Nombre del Médico</label>
                   <input type="text" name="name" class="form-control" placeholder="Ingresa el Nombre" value="{{old('name', $doctor->name)}}" required >
+            </div>
+            <div class="form-group">
+              <label for="specialties">Especialidades </label>
+                <select name="specialties[]" class="form-control selectpicker" id="specialties" data-live-search="true" multiple title="Seleccione una o varias" data-style="btn-outline-primary" >
+                  @foreach ( $specialties as $specialty )
+                    <option value="{{$specialty->id}}" >{{$specialty->name}}</option>
+                  @endforeach
+                </select>
             </div>
             <div class="form-group">
                <label for="">E-mail</label>
@@ -57,4 +72,17 @@
         </form>
       </div>
 </div>
+@endsection
+@section('scripts')
+ {{-- cdn para BOOTSTRAP-SELECT--}}
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/js/bootstrap-select.min.js"></script>
+<script>
+  $(document).ready(()=>{
+      var lista=@json($specialty_ids);  // GET IDS DE LAS ESPECIALIDADES
+      $('#specialties').selectpicker('val', lista); 
+       // select picker recibe los id de los valores que desea mostrar en las option
+  });
+   
+</script>
 @endsection

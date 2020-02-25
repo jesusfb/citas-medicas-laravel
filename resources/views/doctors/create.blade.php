@@ -2,12 +2,9 @@
 @section('styles')
 {{-- ESTOS CDN LOS COPIAMOS DE LA PAGINA OFICINAL DE BOOSTRAP-SELECT --}}
 {{-- https://developer.snapappointments.com/bootstrap-select/ --}}
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.min.css">
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-
 @endsection
 
 @section('content')
@@ -42,12 +39,12 @@
                   <input type="text" name="name" class="form-control" placeholder="Ingresa el Nombre" value="{{old('name')}}" required >
             </div>
             <div class="form-group">
-              <label for="specialties">Especialidades del Médico</label>
-                <select name="specialties" id="specialties" class="form-control ">
-                    @foreach ($specialties as $specialty)
-                    <option value="{{$specialty->id}}">{{$specialty->name}}</option>
+                <label for="specialties">Especialidades </label>
+                  <select name="specialties[]" class="form-control selectpicker" id="specialties" data-live-search="true" multiple title="Seleccione una o varias" data-style="btn-outline-primary" >
+                    @foreach ( $specialties as $specialty )
+                      <option value="{{$specialty->id}}" data-tokens="mustard">{{$specialty->name}}</option>
                     @endforeach
-                </select>
+                  </select>
             </div>
             <div class="form-group">
                <label for="">E-mail</label>
@@ -77,5 +74,5 @@
 @section('scripts')
  {{-- cdn para BOOTSTRAP-SELECT--}}
     <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/js/bootstrap-select.min.js"></script>
 @endsection

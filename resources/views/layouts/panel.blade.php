@@ -8,6 +8,8 @@
     Sistema de Reserva de Citas | {{config('app.name')}}
   </title>
   <!-- Favicon -->
+
+
   <link href="{{asset('img/brand/favicon.png" rel="icon" type="image/png')}}">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -128,12 +130,14 @@
   <script src="{{asset('js/plugins/jquery/dist/jquery.min.js')}}"></script>
   <script src="{{asset('js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
   <!--   Optional JS   -->
+  @yield('scripts')
   <script src="{{asset('js/plugins/chart.js/dist/Chart.min.js')}}"></script>
   <script src="{{asset('js/plugins/chart.js/dist/Chart.extension.js')}}"></script>
   <!--   Argon JS   -->
-   @yield('scripts')
+
   <script src="{{asset('js/argon-dashboard.min.js?v=1.1.2')}}"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
   <script>
     window.TrackJS &&
       TrackJS.install({
