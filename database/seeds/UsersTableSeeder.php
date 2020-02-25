@@ -22,6 +22,26 @@ class UsersTableSeeder extends Seeder
             'role' => 'admin',
 
         ]);
+        App\User::create([
+            'name' => 'Dr. Ramirez',
+            'email' => 'doctor@gmail.com',
+            'password' =>bcrypt('123456'), 
+            'dni' => '',
+            'address' => '',
+            'phone' => '',
+            'role' => 'doctor',
+
+        ]);
+        App\User::create([
+            'name' => 'Ricardo Fort',
+            'email' => 'patient@gmail.com',
+            'password' =>bcrypt('123456'), 
+            'dni' => '',
+            'address' => '',
+            'phone' => '',
+            'role' => 'patient',
+
+        ]);
         //DESPUES SE CREAN ESTOS 50 REGISTROS
         factory(App\User::class, 50)->create();
      

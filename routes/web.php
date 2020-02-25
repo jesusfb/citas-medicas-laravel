@@ -55,10 +55,11 @@ Route::middleware(['auth', 'admin'])->group( function () {
 
 Route::middleware(['auth', 'doctor'])->group( function () {
     //ESPECIALIDADE S
-            Route::get('schedule', 'Doctor\ScheduleController@edit')->name('schedule.edit');
-            // para consultar su horario actual
-            Route::post('schedule/store', 'Doctor\ScheduleController@store')->name('schedule.store');
-            // para guardar o actualizar su informacion 
-    });
+        Route::get('schedule', 'Doctor\ScheduleController@edit')->name('schedule.edit');
+        // para consultar su horario actual
+        Route::post('schedule/store', 'Doctor\ScheduleController@store')->name('schedule.store');
+        // para guardar o actualizar su informacion 
+});
         
-    
+Route::get('appointment', 'AppointmentController@create')->name('appointments.create');
+Route::post('appointments/create', 'AppointmentController@create')->name('appointments.store');

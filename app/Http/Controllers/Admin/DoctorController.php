@@ -5,8 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\User;
-
-
+use App\Specialty;
 
 class DoctorController extends Controller
 {
@@ -22,7 +21,8 @@ class DoctorController extends Controller
        return view('doctors.index',compact('doctors'));
     }
     function create(){
-        return view('doctors.create');
+        $specialties=Specialty::all();
+        return view('doctors.create', compact('specialties'));
     }
     function store(Request $request){
         // el validate usa 2 parametros el request a validar y las reglas que se van a usar

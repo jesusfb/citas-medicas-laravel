@@ -49,7 +49,7 @@
     </li>
    @else  {{-- Quiere decir que no soy admin  ni doctor entonces soy un PACIENTE --}}
     <li class="nav-item  active ">
-      <a class="nav-link  active " href="/home">
+      <a class="nav-link  active" href="{{route('appointments.create')}}">
         <i class="ni ni-tablet-button text-blue"></i> Reservar Cita
       </a>
     </li>

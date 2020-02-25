@@ -44,4 +44,7 @@ class User extends Authenticatable
     function scopePatients($query){
         return $query->where('role','patient');
     }
+    function specialties(){
+        return $this->belongsToMany(Specialty::class);
+    }
 }
