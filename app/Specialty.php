@@ -10,7 +10,7 @@ class Specialty extends Model
     // porque estamos siguiendo la convencion es decir laravel buscara una tabla que se llame speicalties o sea //en "plurar"
 
     function users(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
     
 }

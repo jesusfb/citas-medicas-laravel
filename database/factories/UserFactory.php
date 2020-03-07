@@ -28,3 +28,12 @@ $factory->define(App\User::class, function (Faker $faker) {
         
     ];
 });
+// cada vez que se ejecute este estado va tener un valor que es patient
+$factory->state(App\User::class, 'patient',[
+    'role' => 'patient',
+]);
+
+// cada vez que se ejecute este estado va tener un valor que es doctor (override)
+$factory->state(App\User::class, 'doctor',[
+    'role' => 'doctor',
+]);

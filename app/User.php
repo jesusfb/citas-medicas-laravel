@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'pivot'
         // ESTO SON LOS CAMPOS QUE SE PUEDEN ASIGNAR DE FORMA MASIVA, NO QUEREMOS QUE EL ROL
         // SE SIGNE DE FORMA MASIVA POR ESO NO LO PONEMOS EN ESTE ARRAY
     ];
@@ -45,6 +45,6 @@ class User extends Authenticatable
         return $query->where('role','patient');
     }
     public function specialties(){
-        return $this->belongsToMany(Specialty::class);
+        return $this->belongsToMany(Specialty::class)->withTimestamps();
     }
 }

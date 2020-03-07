@@ -12,7 +12,7 @@
     <div class="card-header border-0">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0">Nueva Médico</h3>
+          <h3 class="mb-0">Editar Médico</h3>
         </div>
         <div class="col text-right">
         <a href="{{ route('doctors.index') }}" class="btn btn-sm btn-default">
@@ -41,7 +41,7 @@
             </div>
             <div class="form-group">
               <label for="specialties">Especialidades </label>
-                <select name="specialties[]" class="form-control selectpicker" id="specialties" data-live-search="true" multiple title="Seleccione una o varias" data-style="btn-outline-primary" >
+                <select name="specialties[]" class="form-control selectpicker" id="specialties" data-live-search="true" multiple title="Seleccione una o varias" data-style="btn-outline-primary" required>
                   @foreach ( $specialties as $specialty )
                     <option value="{{$specialty->id}}" >{{$specialty->name}}</option>
                   @endforeach

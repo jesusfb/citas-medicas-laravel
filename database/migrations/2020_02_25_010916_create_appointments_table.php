@@ -13,9 +13,27 @@ class CreateAppointmentsTable extends Migration
      */
     public function up()
     {
+        // para almanecenar las Citas
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
-             
+            $table->string('description');
+            $table->date('scheduled_date');
+            $table->time('scheduled_time');
+            $table->string('type');
+           
+            // fk specialty, doctor , patient
+            //doctor
+            $table->unsignedInteger('doctor_id');
+            $table->foreign('doctor_id')->references('id')->on('users');
+
+            // specialty
+            $table->unsignedInteger('specialty_id');
+            $table->foreign('specialty_id')->references('id')->on('specialties');
+
+            //patients
+            $table->unsignedInteger('patient_id');
+            $table->foreign('patient_id')->references('id')->on('users');
+
             $table->timestamps();
         });
     }

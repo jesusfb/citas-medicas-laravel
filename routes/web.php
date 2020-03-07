@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('api/users', 'AppointmentController@getUsers');
 Route::get('/', function () {
     return view('welcome');
 });
@@ -60,7 +60,14 @@ Route::middleware(['auth', 'doctor'])->group( function () {
         Route::post('schedule/store', 'Doctor\ScheduleController@store')->name('schedule.store');
         // para guardar o actualizar su informacion 
 });
-        
-Route::get('appointment', 'AppointmentController@create')->name('appointments.create');
-Route::post('appointments/create', 'AppointmentController@create')->name('appointments.store');
-Route::get('datos/{doctor}', 'Admin\DoctorController@getSpecialties')->name('specialties.getdata');
+
+Route::middleware('auth')->group( function () {
+
+    Route::get('appointment', 'AppointmentController@create')->name('appointments.create');
+    Route::post('appointments/store', 'AppointmentController@store')->name('appointments.store');
+    //JSON
+    Route::get('/specialties/{specialty}/doctors','Api\SpecialtyController@doctors')->name('specialties.doctors');
+    Route::get('/schedule/hours/doctors','Api\ScheduleController@hours')->name('schedule.doctors.hours');
+});
+
+

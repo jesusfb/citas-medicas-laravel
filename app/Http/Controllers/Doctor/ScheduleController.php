@@ -45,7 +45,6 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        
         //dd($request->all());
         $active= $request->input('active') ?  : []; // si no existe active devuelve un array vacio
         $morning_start= $request->morning_start;  // CADA REQUEST ES UN ARRAY DE INPUTS
@@ -107,15 +106,26 @@ class ScheduleController extends Controller
     {
         //
         $workDays=WorkDay::where('user_id',auth()->user()->id)->get();
+
+        if(count($workDays)>0){
+            $workDays->map(function($data){
+                // esto me va permitir mapear los campos en formato hora minutos y am/pm
+                    $data->morning_start=(new Carbon($data->morning_start))->format('g:i A');
+                    $data->morning_end=(new Carbon($data->morning_end))->format('g:i A');
+                    $data->afternoon_start=(new Carbon($data->afternoon_start))->format('g:i A');
+                    $data->afternoon_end=(new Carbon($data->afternoon_end))->format('g:i A');
+                    return $data;
+            });
     
-        $workDays->map(function($data){
-            // esto me va permitir mapear los campos en formato hora minutos y am/pm
-                $data->morning_start=(new Carbon($data->morning_start))->format('g:i A');
-                $data->morning_end=(new Carbon($data->morning_end))->format('g:i A');
-                $data->afternoon_start=(new Carbon($data->afternoon_start))->format('g:i A');
-                $data->afternoon_end=(new Carbon($data->afternoon_end))->format('g:i A');
-                return $data;
-        });
+        }else{
+            // caundo el medico no haya definido su horario
+             // ASI NO SE muestra VACIA LA TABLA DE HORARIOS EN LA VISTA DE HORARIOS
+            $workDays= collect(); // necesitamos crear una collection para que en la vista se puede iterar sobre él
+            for ($i=0; $i <7 ; $i++) {  // entonces creo un object por cada dia y lo agrego a la collection
+                $workDays->push(new WorkDay());
+            }
+            // con todo esto va mostrar la tabla de horarios vacios para que el medico pueda definir su horario
+        }
         $days=$this->days; 
         return view('schedule',compact('days','workDays'));
       

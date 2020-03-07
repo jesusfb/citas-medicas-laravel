@@ -25,44 +25,76 @@
             </ul>
           </div>
          @endif  
-          <form action="{{ route('patients.store') }}" method="POST">
+          <form action="{{ route('appointments.store') }}" method="POST">
             @csrf 
             <div class="form-group">
-                <label for="">Especialidad</label>
-                <select name="especialidad" id="especialidad" class="form-control">
-                    @foreach ($specialties as $specialty)
-                     <option value="{{$specialty->id}}">{{$specialty->name}}</option>
-                    @endforeach
-                </select>
+              <label for="description">DescripciÓn</label>
+                <input name="description" id="description" type="text" class="form-control" placeholder="Describe brevemente tu consulta" value="{{old('description')}}" required >
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                  <label for="specialty">Especialidad</label> {{-- el atributo for debe ser el mismo que el id--}}
+                  <select name="specialty_id" id="specialty" class="form-control" required>
+                    <option selected="true" disabled="disabled">Seleccionar Especialidad</option>
+                      @foreach ($specialties as $specialty)
+                      <option value="{{$specialty->id}}" 
+                        @if(old('specialty_id') == $specialty->id) selected @endif >{{$specialty->name}}
+                      </option>
+                      @endforeach
+                  </select>
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="doctor">Médico</label>
+                  <select name="doctor_id" id="doctor" class="form-control" required>
+                    {{-- ESTE SELECT PEUDE ESTAR VACIO SOLO SE VA ACTIVAR SI EXISTE EL CAMPO OLD--}}
+                    @foreach ($doctors as $doctor) 
+                    <option value="{{$doctor->id}}" 
+                       @if(old('doctor_id') == $doctor->id) selected @endif >{{$doctor->name}}
+                    </option>
+                    @endforeach  
+                  </select>
+              </div>
             </div>
             <div class="form-group">
-               <label for="">Médico</label>
-               <select name="medico" id="medico" class="form-control">
-                              
-              </select>
-           </div>
-            <div class="form-group">
-               <label for="">Fecha</label>
+               <label for="date">Fecha</label>
                 <div class="input-group input-group-alternative">
                   <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                    <input type="text" class="form-control datepicker" placeholder="Select date" >
+                  <input class="form-control datepicker" placeholder="Seleccionar Fecha" 
+                    id="date" type="text" name="scheduled_date" value="{{old('scheduled_date',date('Y-m-d')) }}" 
+                    data-date-format="yyyy-mm-dd"
+                    data-date-start-date="{{date('Y-m-d')}}" 
+                    data-date-end-date="+30d" required>
                   </div>
                 </div>
              </div>
              <div class="form-group">
-              <label for="">Hora de Atención</label>
-                <input type="text" name="address" class="form-control" value="{{old('address')}}" required >
+              <label>Hora de Atención</label>
+                <div id="hours">
+                    {{-- aqui se van a llnear los intervalos, o se va lanzar el mensaje de alerta---}}
+                    <div class= "alert alert-info" role="alert">
+                        Selecciona un médico y una fecha, para ver sus horarios disponibles.
+                    </div>
+                </div>
              </div>
              <div class="form-group">
-              <label for="">Teléfono</label>
-                <input type="number" name="phone" class="form-control" placeholder="Ingresa tu Telefono" value="{{old('phone')}}" required >
-             </div>
-             <div class="form-group">
-              <label for="password">Contraseña</label>
-                <input type="password" name="password" class="form-control" placeholder="Ingresa tu Telefono" required >
-             </div>
-             
+              <label  for="type">Tipo de Consulta</label>
+                <div class="custom-control custom-radio mb-3"> 
+                    <input name="type" class="custom-control-input" id="type1" checked type="radio" required
+                    @if(old('type','Consulta') == 'Consulta') checked @endif value="Consulta" >
+                    <label class="custom-control-label" for="type1">Consulta</label>
+                 </div>
+                 <div class="custom-control custom-radio mb-3"> 
+                    <input name="type" class="custom-control-input" id="type2"  type="radio" required
+                    @if(old('type') == 'Examen')  checked @endif value="Examen">
+                    <label class="custom-control-label" for="type2">Examen</label>
+                 </div>
+                <div class="custom-control custom-radio mb-3"> 
+                    <input name="type" class="custom-control-input" id="type3"  type="radio" required 
+                    @if(old('type') == 'Operación')  checked @endif value="Operación">
+                    <label class="custom-control-label" for="type3">Operación</label>
+                </div>
+             </div> 
              <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
       </div>
@@ -71,4 +103,5 @@
 @endsection
 @section('scripts')
 <script src="{{asset('js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('js/scripts/appointment/select_doctor.js')}}"></script>
 @endsection

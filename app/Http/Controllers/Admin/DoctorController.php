@@ -28,7 +28,7 @@ class DoctorController extends Controller
     
     function store(Request $request){
         // el validate usa 2 parametros el request a validar y las reglas que se van a usar
-        //dd($request->all());
+        dd($request->all());
         $this->performValidation($request);
        // dd($request->all());
          $user= User::Create(
@@ -43,7 +43,7 @@ class DoctorController extends Controller
             //esto evita que el usuario desde el cliente inserte un input con el role admin por ejemplo
         );
         // PARA LLENAR LA TABLA MUCHOS A MUCHOS!
-        $user->specialties()->attach($request->input('specialties'));
+        $user->specialties()->attach($request->input('specialties')); 
         $notification = 'La especialidad ha sido registrada Exitosamente!';
         return \redirect()->route('doctors.index')->with(compact('notification'));
     }
@@ -81,17 +81,23 @@ class DoctorController extends Controller
         $this->validate($request,$rules,$messages);
     }
     function update(Request $request,User $doctor){
+        //dd($request->all() , $doctor->toArray());
+        
         $this->performValidation($request);
         $data=  $request->only('name','email','dni','address','phone');
         $password= $request->password;
         if($password) $data['password'] = bcrypt($password);
+      
         $doctor->fill($data);
         $doctor->save(); // para guardar los cambios despues de haber usado el "fill" 
+        // para modificar la tabla "intermedia"
+        $doctor->specialties()->sync($request->input('specialties'));
+        // LARAVEL SYNCRONIZA LAS ESPECIALIDADES QUE NO TENIA.
+
         $notification = 'Los Datos del Médico ha sido actualizado';
         return \redirect()->route('doctors.index')->with(compact('notification'));
     }
     function destroy(User $doctor){
-       
         $notification = 'La especialida '.$doctor->name .' ha sido eliminada';
         $doctor->delete();
         return \redirect()->route('doctors.index')->with(compact('notification'));

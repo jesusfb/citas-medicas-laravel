@@ -12,9 +12,10 @@ class UsersTableSeeder extends Seeder
     public function run()
     {   
         //PARA CREAR EL PRIMER USER POR DEFECTO
+        // ID 1
         App\User::create([
-            'name' => 'Jorge Luis',
-            'email' => 'jorgestudio2017@gmail.com',
+            'name' => 'Admin Test',
+            'email' => 'admin@gmail.com',
             'password' =>bcrypt('123456'), 
             'dni' => '',
             'address' => '',
@@ -22,18 +23,10 @@ class UsersTableSeeder extends Seeder
             'role' => 'admin',
 
         ]);
+                // ID 2
+       
         App\User::create([
-            'name' => 'Dr. Ramirez',
-            'email' => 'doctor@gmail.com',
-            'password' =>bcrypt('123456'), 
-            'dni' => '',
-            'address' => '',
-            'phone' => '',
-            'role' => 'doctor',
-
-        ]);
-        App\User::create([
-            'name' => 'Ricardo Fort',
+            'name' => 'Pacient Test',
             'email' => 'patient@gmail.com',
             'password' =>bcrypt('123456'), 
             'dni' => '',
@@ -42,8 +35,20 @@ class UsersTableSeeder extends Seeder
             'role' => 'patient',
 
         ]);
+           
+        // ID 3
+        App\User::create([
+            'name' => 'Doctor Test',
+            'email' => 'doctor@gmail.com',
+            'password' =>bcrypt('123456'), 
+            'dni' => '',
+            'address' => '',
+            'phone' => '',
+            'role' => 'doctor',
+
+        ]);
         //DESPUES SE CREAN ESTOS 50 REGISTROS
-        factory(App\User::class, 50)->create();
-     
+        factory(App\User::class, 50)->state('patient')->create();
+      
     }
 }
