@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Interfaces\ScheduleServiceInterface;
 use Illuminate\Http\Request;
 use App\Specialty;
 use App\Appointment;
@@ -10,9 +10,8 @@ use Carbon\Carbon;
 class AppointmentController extends Controller
 {
    
-    function create(){
+    function create(ScheduleServiceInterface $scheduleService){
         $specialties= Specialty::all();
-      //  dd($specialties->toArray());
          $specialtyId= old('specialty_id');
          if($specialtyId){
              $specialty=Specialty::find($specialtyId);
@@ -20,8 +19,14 @@ class AppointmentController extends Controller
          }else{
              $doctors= collect();
          }
-
-        return view('appointments.create',compact('specialties','doctors'));
+         $date= old('scheduled_date');
+         $doctorId=old('doctor_id');
+         if($date && $doctorId){
+            $intervals= $scheduleService->getAvailableIntervals($date,$doctorId);
+         }else{
+             $intervals= null;
+         }
+        return view('appointments.create',compact('specialties','doctors' ,'intervals'));
     }
     function store(Request $request){
         // vamos a crear una nueva Cita
