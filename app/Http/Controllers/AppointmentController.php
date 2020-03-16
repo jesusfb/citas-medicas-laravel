@@ -7,6 +7,7 @@ use App\Specialty;
 use App\Appointment;
 use App\User;
 use Carbon\Carbon;
+use Validator;
 class AppointmentController extends Controller
 {
    
@@ -28,7 +29,7 @@ class AppointmentController extends Controller
          }
         return view('appointments.create',compact('specialties','doctors' ,'intervals'));
     }
-    function store(Request $request){
+    function store(Request $request, ScheduleServiceInterface $scheduleService){
         // vamos a crear una nueva Cita
         //dd($request->all());
         $rules= [
@@ -42,7 +43,32 @@ class AppointmentController extends Controller
             'scheduled_time.required' => 'Por favor seleccione una hora válida para su cita.' ,
             'scheduled_date.required' => 'Por favor seleccione una fecha válida para su cita.'
         ];
-        $this->validate($request,$rules,$messages);
+        //$this->validate($request,$rules,$messages);
+        $validator = Validator::make(
+            $request->all(), 
+            $rules, 
+            $messages
+        );
+         // hay que ponerlas en use porque esta funcion anonima no tiene acceso a las otras variables.
+        $validator->after(function($validator) use ($request,$scheduleService){
+            $scheduled_time= $request->scheduled_date;
+            $doctorId= $request->doctor_id;
+            $start= $request->scheduled_time;
+            if($date && $doctorId && $scheduled_time){
+                $tart= new Carbon($scheduled_time);
+            }else{
+                return ;
+            }
+            if (!$scheduleService->isAvailableInterval($date,$doctorId,$start)){
+                $validator->errors()->add('available_time', 'La hora seleccionada ya se encuentra reservada por otro paciente.');
+            }
+        });
+        if ($validator->fails()){
+            // The given data did not pass validation
+            return back()
+            ->withErrors($validator)
+            ->withInput();
+        }
         $data= $request->only([
             'description',
             'scheduled_date',
