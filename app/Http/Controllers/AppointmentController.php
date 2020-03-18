@@ -12,7 +12,7 @@ class AppointmentController extends Controller
 {
    
     function create(ScheduleServiceInterface $scheduleService){
-        $specialties= Specialty::all();
+         $specialties= Specialty::all();
          $specialtyId= old('specialty_id');
          if($specialtyId){
              $specialty=Specialty::find($specialtyId);
@@ -51,14 +51,15 @@ class AppointmentController extends Controller
         );
          // hay que ponerlas en use porque esta funcion anonima no tiene acceso a las otras variables.
         $validator->after(function($validator) use ($request,$scheduleService){
-            $scheduled_time= $request->scheduled_date;
+            $date= $request->scheduled_date;
             $doctorId= $request->doctor_id;
-            $start= $request->scheduled_time;
+            $scheduled_time= $request->scheduled_time;
             if($date && $doctorId && $scheduled_time){
-                $tart= new Carbon($scheduled_time);
+                $start= new Carbon($scheduled_time);
             }else{
                 return ;
             }
+            // verifico si esta disponible pasando la fecha, doctor id, y la hora a consultar en un object carbon
             if (!$scheduleService->isAvailableInterval($date,$doctorId,$start)){
                 $validator->errors()->add('available_time', 'La hora seleccionada ya se encuentra reservada por otro paciente.');
             }
