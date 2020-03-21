@@ -1,0 +1,55 @@
+Los dias de las citas se manejan en la BD
+0 Lunes..... 6 Domingo
+
+Los estados de las citas son
+reservada // por defecto cuando se crea la cita
+confirmada  // cuando el doctor o adm confirma la cita
+atendida    // cuando se ha realizado la atencion correctamente
+cancelada   // cuando ocurra alguna emergencia esta se otra cancelar.
+
+Una cita puede pasar de 
+reservada -> confirmada
+confirmada->atentida
+confirmada->cancelada
+pero nunca podria pasar de 
+atentida -> cancelada.(no es posible cancelar la cita porque esta ya se ha atendido).
+
+//Cuando se registra(Reservada) una Cita:
+Cuando se reserva una cita le debe de llegar una notificacion al medico para que el medico 
+pueda confirmar y/o aceptar atender la cita
+*Notificacion al medico -> Confirmar/cancelar (Movil)
+*AdministradorConfirmar: Confirmar/Cancelar (Web)
+*Paciente puede cancelar (antes de que confirme el adm o el doctor) esto no va enviar ninguna notificacion.
+Exception: Informar al medico que no puede confirmar la cita porque el paciente la ha cancelado.
+Regla: No se puede registrar y cancelar, por mas de 2 veces en un mismo dia, o mas de 3 veces en la misma semana. 
+
+
+
+//Cuando una cita es Confirmada 
+*Paciente puede cancelar una cita-> vamos a preguntar el motivo y sugerir que comunique por telefono
+*Si un paciente cancelar se le debe de enviar una notificacion al medico 
+Se va enviar la notificacion si la fecha programada se encuentra en los proximos 5dias
+
+// como el adm y el doctor pueden aceptar o rechazar vamos a tener 2 column nuevas
+¿Quien cancelo la cita y cuando ocurrio?
+
+*Al confirmar la cita o cancelar:
+ -Notificacion al paciente, si fue rechazado indicando el motivo en particular
+ ¿Quién cancelo y cuándo? -> 2 column
+ ¿Por qué se cancelo? -> 1 Column
+
+ // Quien puede marcar una cita como atendida? 
+ * Solo el medico o adm pero tiene un requisito , solo va aparecer si la hora actual , coincide con la hora programada de la cita. (no marcar antes de la hora).
+
+ -----------------
+paciente: Lista de citas
+* Las citas que ha reservado y el estado de cada cita 
+*Boton cancelar
+
+Medico : Lista de citas
+*Las citas que han reservado sus pacientes y opcion para confirmar/cancelar.
+*Sus proximas citas confirmadas.
+
+Adminiastrador: Lista de citas
+*Las citas reservadas recientemente y opc. para confirmar/cancelar.
+*proximas citas que deben ser atendidas(ya se encuentran con el estado de confirmadas).

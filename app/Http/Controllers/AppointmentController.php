@@ -8,8 +8,26 @@ use App\Appointment;
 use App\User;
 use Carbon\Carbon;
 use Validator;
+use Auth;                   
 class AppointmentController extends Controller
 {
+    // admin -> all 
+    // doctor 
+    // patient
+    function index(){
+        //$confirmedAppointments=Appointment::paginate(10);
+
+        // 4 Status: Confirmada, Atendida, Cancelada , Confirmada
+        $confirmedAppointments=Appointment::where('status', 'Confirmada')
+        ->where('patient_id',Auth::user()->id)
+        ->paginate(10);
+        $pendingAppointments=Appointment::where('status', 'Reservada')
+        ->where('patient_id',Auth::user()->id)
+        ->paginate(10);
+        $oldAppointments=Appointment::whereIn('status',['Atendida','Cancelada'])
+        ->paginate(10);
+        return view('appointments.index',compact('confirmedAppointments', 'pendingAppointments','oldAppointments'));
+    }
    
     function create(ScheduleServiceInterface $scheduleService){
          $specialties= Specialty::all();
@@ -89,6 +107,13 @@ class AppointmentController extends Controller
         $notification='La cita se ha registrado Correctamente!';
         return back()->with(compact('notification'));
     }
+    function cancel(Appointment $appointment){
+        $appointment->status='Cancelada';
+        $appointment->update();
+        $notification='Su cita ha sido cancelada Exitosamente';
+        return back()->with(compact('notification'));
+    }
+    // prueba de WBS
     function getUsers(Request $request){
         if($request->isJson()){
             $users=User::where('role','patient')->get(['id','name', 'email' , 'role']);

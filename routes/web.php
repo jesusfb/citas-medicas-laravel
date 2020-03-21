@@ -59,12 +59,24 @@ Route::middleware(['auth', 'doctor'])->group( function () {
         // para consultar su horario actual
         Route::post('schedule/store', 'Doctor\ScheduleController@store')->name('schedule.store');
         // para guardar o actualizar su informacion 
+
+       
 });
 
 Route::middleware('auth')->group( function () {
 
     Route::get('appointment', 'AppointmentController@create')->name('appointments.create');
-    Route::post('appointments/store', 'AppointmentController@store')->name('appointments.store');
+    Route::post('appointments/store', 'AppointmentController@store')->name('appointments.stre');
+
+    /*
+     verificar que variables vamos a pasar a la vista
+     1 sola vista (conodiciones depende del rol para mostrar)
+    */
+    Route::get('appointments', 'AppointmentController@index')->name('appointments.index');
+    Route::post('appointments/{appointment}/cancel', 'AppointmentController@cancel')
+    ->name('appointments.cancel');
+    
+    
     //JSON
     Route::get('/specialties/{specialty}/doctors','Api\SpecialtyController@doctors')->name('specialties.doctors');
     Route::get('/schedule/hours/doctors','Api\ScheduleController@hours')->name('schedule.doctors.hours');
