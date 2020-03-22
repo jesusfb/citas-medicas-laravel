@@ -13,6 +13,7 @@
           <th scope="col">Opciones</th>
         </tr>
       </thead>
+          <!-- Citas confirmadas -->
       <tbody>
           @foreach ($confirmedAppointments as $appointment)
         <tr>
@@ -38,9 +39,7 @@
             <span class="badge badge-primary" title="Estado actual de la cita">{{ $appointment->status}} </span>
           </td>
           <td>
-              <form action="#" method="post">
-                  @csrf
-                  @method('DELETE')
+          <form action="{{route('appointments.show.form.cancel', $appointment->id)}}" method="GET">
                   <button title= "Cancelar Cita Medica" type="submit" class="btn btn-danger btn-sm">Cancelar</button>
               </form>
           </td>

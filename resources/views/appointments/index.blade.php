@@ -8,11 +8,6 @@
         <div class="col">
           <h3 class="mb-0">Mis Citas</h3>
         </div>
-        <div class="col text-right">
-        <a href="{{route('appointments.create')}}" class="btn btn-sm btn-success" title="Crear una Nueva Cita">
-              Nuevo Cita
-          </a>
-        </div>
       </div>
     </div>
     <div class="card-body" role="alert">

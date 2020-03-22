@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\CancelledAppointment;
 class Appointment extends Model
 {
     //
@@ -48,4 +49,11 @@ class Appointment extends Model
         return (new Carbon($this->scheduled_time))->format('g:i A');
 
     }
+
+    //relacion 1 - 1/0 
+    //(1 appointment se va relacionar con una o ninguna cancelacion)
+    //appojntment->cancellation->cancelled_by 
+    function cancellation(){
+        return $this->hasOne(CancelledAppointment::class);
+    } 
 }

@@ -38,7 +38,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="{{route('specialties.index')}}">
+      <a class="nav-link " href="{{route('appointments.index')}}">
         <i class="ni ni-time-alarm text-orange"></i> Mis Citas
       </a>
     </li>

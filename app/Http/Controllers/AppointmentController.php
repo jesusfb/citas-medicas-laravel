@@ -8,6 +8,7 @@ use App\Appointment;
 use App\User;
 use Carbon\Carbon;
 use Validator;
+use App\CancelledAppointment;
 use Auth;                   
 class AppointmentController extends Controller
 {
@@ -18,6 +19,7 @@ class AppointmentController extends Controller
         //$confirmedAppointments=Appointment::paginate(10);
 
         // 4 Status: Confirmada, Atendida, Cancelada , Confirmada
+        // PATIENT
         $confirmedAppointments=Appointment::where('status', 'Confirmada')
         ->where('patient_id',Auth::user()->id)
         ->paginate(10);
@@ -107,11 +109,28 @@ class AppointmentController extends Controller
         $notification='La cita se ha registrado Correctamente!';
         return back()->with(compact('notification'));
     }
-    function cancel(Appointment $appointment){
+    function showFormCancel(Appointment $appointment){
+        if($appointment->status== 'Confirmada'){
+            return view('appointments.form-cancel',compact('appointment'));
+        }
+        return redirect()->route('appointments.index');
+    }
+    function postCancel(Appointment $appointment, Request $request){
         $appointment->status='Cancelada';
+        if($request->has('justification')){
+            $cancelledAppointment = new CancelledAppointment();
+            $cancelledAppointment->justification= $request->justification;
+            $cancelledAppointment->appointment_id=$appointment->id;
+            $cancelledAppointment->cancelled_by_id=Auth::user()->id;
+            $cancelledAppointment->save();
+        }
         $appointment->update();
         $notification='Su cita ha sido cancelada Exitosamente';
-        return back()->with(compact('notification'));
+        return \Redirect::route('appointments.index')->with(compact('notification'));
+    }
+    function show(Appointment $appointment){
+       // dd((CancelledAppointment::get())->all());
+        return view('appointments.show',compact('appointment'));
     }
     // prueba de WBS
     function getUsers(Request $request){

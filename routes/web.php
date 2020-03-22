@@ -12,7 +12,7 @@
 */
 Route::get('api/users', 'AppointmentController@getUsers');
 Route::get('/', function () {
-    return view('welcome');
+  return redirect('/login');
 });
 
 Auth::routes();
@@ -66,14 +66,16 @@ Route::middleware(['auth', 'doctor'])->group( function () {
 Route::middleware('auth')->group( function () {
 
     Route::get('appointment', 'AppointmentController@create')->name('appointments.create');
-    Route::post('appointments/store', 'AppointmentController@store')->name('appointments.stre');
+    Route::post('appointments/store', 'AppointmentController@store')->name('appointments.store');
 
     /*
      verificar que variables vamos a pasar a la vista
      1 sola vista (conodiciones depende del rol para mostrar)
     */
     Route::get('appointments', 'AppointmentController@index')->name('appointments.index');
-    Route::post('appointments/{appointment}/cancel', 'AppointmentController@cancel')
+    Route::get('appointments/{appointment}/cancel', 'AppointmentController@showFormCancel')->name('appointments.show.form.cancel');
+    Route::get('appointment/{appointment}/show', 'AppointmentController@show')->name('appointments.show');
+    Route::post('appointments/{appointment}/cancel', 'AppointmentController@postCancel')
     ->name('appointments.cancel');
     
     
