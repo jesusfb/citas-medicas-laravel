@@ -18,9 +18,15 @@
             <li>
                  <strong>Hora: </strong>{{ $appointment->scheduled_time_12}}
             </li>
+            @if(Auth::user()->role=='doctor')
             <li>
-                 <strong>Médico: </strong>{{ $appointment->doctor->name}}
-            </li>
+                <strong>Paciente: </strong>{{ $appointment->patient->name}}
+           </li>
+            @elseif(Auth::user()->role=='patient')
+            <li>
+                <strong>Médico: </strong>{{ $appointment->doctor->name}}
+           </li>
+            @endif
             <li>
                  <strong>Especialidad: </strong>{{ $appointment->specialty->name}}
             </li>
@@ -48,7 +54,12 @@
                     <strong>Fecha y hora de la cancelación: </strong>{{ $appointment->cancellation->created_at}}
                 </li>
                 <li>
-                    <strong>¿Quién canceló la cita?: </strong>{{ $appointment->cancellation->cancelled_by->name}}
+                    <strong>¿Quién canceló la cita?:</strong>
+                    @if(auth()->id()==$appointment->cancellation->cancelled_by_id)
+                     Tú
+                    @else
+                    {{$appointment->cancellation->cancelled_by->name}}
+                    @endif
                 </li>
                 @else
                 <li>

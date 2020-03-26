@@ -16,19 +16,42 @@ class AppointmentController extends Controller
     // doctor 
     // patient
     function index(){
-        //$confirmedAppointments=Appointment::paginate(10);
-
+        //$confirmAuth::user()edAppointments=Appointment::paginate(10);
+        $role= auth()->user()->role;
+        // rol actual de la persona logeada
         // 4 Status: Confirmada, Atendida, Cancelada , Confirmada
+        if($role=='admin'){
+            $confirmedAppointments=Appointment::where('status', 'Confirmada')
+            ->paginate(10);
+            $pendingAppointments=Appointment::where('status', 'Reservada')
+            ->paginate(10);
+            $oldAppointments=Appointment::whereIn('status',['Atendida','Cancelada'])
+            ->paginate(10);
+        } elseif($role=='doctor'){
+            $confirmedAppointments=Appointment::where('status', 'Confirmada')
+            ->where('doctor_id',Auth::user()->id)
+            ->paginate(10);
+            $pendingAppointments=Appointment::where('status', 'Reservada')
+            ->where('doctor_ id',Auth::user()->id)
+            ->paginate(10);
+            $oldAppointments=Appointment::whereIn('status',['Atendida','Cancelada'])
+            ->paginate(10);
+    
+        }else if($role=='patient'){
+
+            $confirmedAppointments=Appointment::where('status', 'Confirmada')
+            ->where('patient_id',Auth::user()->id)
+            ->paginate(10);
+            $pendingAppointments=Appointment::where('status', 'Reservada')
+            ->where('patient_id',Auth::user()->id)
+            ->paginate(10);
+            $oldAppointments=Appointment::whereIn('status',['Atendida','Cancelada'])
+            ->paginate(10);
+        }
+
         // PATIENT
-        $confirmedAppointments=Appointment::where('status', 'Confirmada')
-        ->where('patient_id',Auth::user()->id)
-        ->paginate(10);
-        $pendingAppointments=Appointment::where('status', 'Reservada')
-        ->where('patient_id',Auth::user()->id)
-        ->paginate(10);
-        $oldAppointments=Appointment::whereIn('status',['Atendida','Cancelada'])
-        ->paginate(10);
-        return view('appointments.index',compact('confirmedAppointments', 'pendingAppointments','oldAppointments'));
+        
+        return view('appointments.index',compact('confirmedAppointments', 'pendingAppointments','oldAppointments','role'));
     }
    
     function create(ScheduleServiceInterface $scheduleService){
@@ -132,6 +155,19 @@ class AppointmentController extends Controller
        // dd((CancelledAppointment::get())->all());
         return view('appointments.show',compact('appointment'));
     }
+    function confirmAppointment(Appointment $appointment){
+      // 4 Status: Reservada, Atendida, Cancelada , Confirmada
+        if($appointment->status == 'Reservada'){
+            $appointment->status='Confirmada';
+            $appointment->update();
+            $notification='Su cita ha sido confirmada Exitosamente';
+            return \Redirect::route('appointments.index')->with(compact('notification'));
+        }
+        return \Redirect::route('appointments.index');
+     }
+ 
+
+    
     // prueba de WBS
     function getUsers(Request $request){
         if($request->isJson()){

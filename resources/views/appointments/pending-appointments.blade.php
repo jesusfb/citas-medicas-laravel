@@ -5,7 +5,12 @@
         <tr>
           <th scope="col">Descripción</th>
           <th scope="col">Especialidad</th>
+          @if($role=='doctor')
+          <th scope="col">Paciente</th>
+          @elseif($role=='patient')
           <th scope="col">Medico</th>
+          @endif
+         
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
           <th scope="col">Tipo</th>
@@ -21,9 +26,15 @@
           <td>
               {{ $appointment->specialty->name}}  
           </td>
+          @if($role=='doctor')
+          <td>
+            {{ $appointment->patient->name}}  
+          </td>
+          @elseif($role=='patient')
           <td>
             {{ $appointment->doctor->name}}  
           </td>
+          @endif
           <td>
               {{ $appointment->scheduled_date}}  
           </td>
@@ -34,10 +45,19 @@
               {{ $appointment->type}}  
           </td>
           <td>
-              <form action="{{route('appointments.cancel',$appointment->id)}}" method="post">
-                  @csrf
-                  <button title= "Cancelar Cita Medica" type="submit" class="btn btn-danger btn-sm">Cancelar</button>
-              </form>
+            @if($role=='doctor')
+            <form action="{{route('appointments.confirm',$appointment->id)}}" method="POST" class="d-inline-block">
+              @csrf
+             
+              <button data-toggle="tooltip" title= "Aprobar Cita Médica" type="submit" class="btn btn-success btn-sm">
+                <i class="ni ni-check-bold"></i></button>
+            @endif   
+            <form action="{{route('appointments.cancel',$appointment->id)}}" method="post"    class="d-inline-block">
+                @csrf
+                <button data-toggle="tooltip" title= "Cancelar Cita Médica" type="submit" class="btn btn-danger btn-sm">
+                  <i class="ni ni-fat-remove"></i>
+                </button>
+            </form>
           </td>
         </tr>
         @endforeach

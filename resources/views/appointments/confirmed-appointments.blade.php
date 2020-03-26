@@ -5,11 +5,14 @@
         <tr>
           <th scope="col">Descripción</th>
           <th scope="col">Especialidad</th>
+          @if($role=='doctor')
+          <th scope="col">Paciente</th>
+          @elseif($role=='patient')
           <th scope="col">Medico</th>
+          @endif
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
           <th scope="col">Tipo</th>
-          <th scope="col">Estado</th>
           <th scope="col">Opciones</th>
         </tr>
       </thead>
@@ -23,9 +26,15 @@
           <td>
               {{ $appointment->specialty->name}}  
           </td>
+          @if($role=='doctor')
+          <td>
+            {{ $appointment->patient->name}}  
+          </td>
+          @elseif($role=='patient')
           <td>
             {{ $appointment->doctor->name}}  
           </td>
+          @endif
           <td>
               {{ $appointment->scheduled_date}}  
           </td>
@@ -34,9 +43,6 @@
           </td>
           <td>
               {{ $appointment->type}}  
-          </td>
-          <td>
-            <span class="badge badge-primary" title="Estado actual de la cita">{{ $appointment->status}} </span>
           </td>
           <td>
           <form action="{{route('appointments.show.form.cancel', $appointment->id)}}" method="GET">

@@ -77,6 +77,9 @@ Route::middleware('auth')->group( function () {
     Route::get('appointment/{appointment}/show', 'AppointmentController@show')->name('appointments.show');
     Route::post('appointments/{appointment}/cancel', 'AppointmentController@postCancel')
     ->name('appointments.cancel');
+    Route::post('appointments/{appointment}/confirm', 'AppointmentController@confirmAppointment')
+    ->name('appointments.confirm');
+    
     
     
     //JSON

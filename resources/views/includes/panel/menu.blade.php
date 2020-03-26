@@ -10,56 +10,7 @@
 
 
 <ul class="navbar-nav">
-  @if(Auth()->user()->role == 'admin')
-    <li class="nav-item  active ">
-      <a class="nav-link  active " href="/home">
-        <i class="ni ni-tv-2 text-primary"></i> Dashboard
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link " href="{{route('specialties.index')}}">
-        <i class="ni ni-planet text-blue"></i> Especialidades
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link "  href="{{route('doctors.index')}}">
-        <i class="ni ni-single-02 text-orange"></i>  Medicos
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link " href="{{route('patients.index')}}">
-        <i class="ni ni-satisfied text-info"></i>  Pacientes
-      </a>
-    </li>
-   @elseif(Auth()->user()->role == 'doctor') 
-    <li class="nav-item  active ">
-    <a class="nav-link  active " href="{{route('schedule.edit')}}">
-        <i class="ni ni-calendar-grid-58 text-blue"></i> Gestionar Horario
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link " href="{{route('appointments.index')}}">
-        <i class="ni ni-time-alarm text-orange"></i> Mis Citas
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link " href="{{route('specialties.index')}}">
-        <i class="ni ni-satisfied text-green"></i> Mis Pacientes
-      </a>
-    </li>
-   @else  {{-- Quiere decir que no soy admin  ni doctor entonces soy un PACIENTE --}}
-    <li class="nav-item  active ">
-      <a class="nav-link  active" href="{{route('appointments.create')}}">
-        <i class="ni ni-tablet-button text-blue"></i> Reservar Cita
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link " href="{{route('appointments.index')}}">
-        <i class="ni ni-time-alarm text-orange"></i> Mis Citas
-      </a>
-    </li>
-
-   @endif  
+  @include('includes.panel.menu.'. auth()->user()->role)
     <li class="nav-item">
            <a class="nav-link" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById  ('formLogout').  submit();">
           <i class="ni ni-key-25"></i> Cerrar Sesión
