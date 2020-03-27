@@ -18,11 +18,12 @@
             <li>
                  <strong>Hora: </strong>{{ $appointment->scheduled_time_12}}
             </li>
-            @if(Auth::user()->role=='doctor')
+            @if(Auth::user()->role=='doctor' ||  Auth::user()->role=='admin' )
             <li>
                 <strong>Paciente: </strong>{{ $appointment->patient->name}}
            </li>
-            @elseif(Auth::user()->role=='patient')
+            @endif 
+            @if(Auth::user()->role=='patient' || Auth::user()->role=='admin' )
             <li>
                 <strong>Médico: </strong>{{ $appointment->doctor->name}}
            </li>
@@ -37,12 +38,12 @@
                  <strong>Estado:</strong>
                  @if($appointment->status == 'Cancelada')
                  <span class="badge badge-warning">  {{ $appointment->status}}</span>
-               
                  @else 
                  <span class="badge badge-success">  {{ $appointment->status}}</span>
                  @endif
             </li>
         </ul>
+        @if($appointment->status=='Cancelada')
         <div class="alert alert-warning" role="alert">
             <p> <strong>Acerca de la cancelación<strong></p>
             <ul>
@@ -68,6 +69,7 @@
                 @endif
             </ul>
         </div>
+        @endif
     <a href="{{route('appointments.index')}}" class="btn btn-default">Volver</a>
    </div>
 </div>

@@ -81,7 +81,6 @@ Route::middleware('auth')->group( function () {
     ->name('appointments.confirm');
     
     
-    
     //JSON
     Route::get('/specialties/{specialty}/doctors','Api\SpecialtyController@doctors')->name('specialties.doctors');
     Route::get('/schedule/hours/doctors','Api\ScheduleController@hours')->name('schedule.doctors.hours');

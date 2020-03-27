@@ -45,10 +45,14 @@
               {{ $appointment->type}}  
           </td>
           <td>
-            @if($role=='doctor')
+              
+            @if($role=='admin')
+            <a class="btn btn-sm btn-primary" href="{{route('appointments.show',$appointment->id)}}" title="Ver detalle">Ver</a>
+            @endif
+            
+            @if($role=='doctor' || $role=='admin')
             <form action="{{route('appointments.confirm',$appointment->id)}}" method="POST" class="d-inline-block">
               @csrf
-             
               <button data-toggle="tooltip" title= "Aprobar Cita Médica" type="submit" class="btn btn-success btn-sm">
                 <i class="ni ni-check-bold"></i></button>
             @endif   

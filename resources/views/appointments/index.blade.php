@@ -30,15 +30,16 @@
         </ul>
       
    </div>
+   {{-- componenets nav --}}
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="confirmed-appointments" role="tabpanel" aria-labelledby="pills-home-tab">
-          @include('appointments.confirmed-appointments')
+          @include('appointments.tables.confirmed')
         </div>
         <div class="tab-pane fade" id="pending-appointments" role="tabpanel" aria-labelledby="pills-profile-tab">
-          @include('appointments.pending-appointments')
+          @include('appointments.tables.pending')
         </div>
         <div class="tab-pane fade" id="old-appointments" role="tabpanel" aria-labelledby="pills-profile-tab">
-          @include('appointments.old-appointments')
+          @include('appointments.tables.old')
         </div>
     </div>
 </div>

@@ -45,9 +45,10 @@
               {{ $appointment->type}}  
           </td>
           <td>
-          <form action="{{route('appointments.show.form.cancel', $appointment->id)}}" method="GET">
-                  <button title= "Cancelar Cita Medica" type="submit" class="btn btn-danger btn-sm">Cancelar</button>
-              </form>
+            @if($role=='admin')
+              <a data-toggle="Ver detalles de la cita"class="btn btn-sm btn-success"href="{{route('appointments.show',$appointment->id)}}">Ver</a>
+            @endif
+              <a  toggle-data="Cancelar esta cita" class="btn btn-sm btn-danger"href="{{route('appointments.show.form.cancel',$appointment->id)}}">Cancelar</a>
           </td>
         </tr>
         @endforeach

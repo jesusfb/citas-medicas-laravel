@@ -32,7 +32,7 @@ class AppointmentController extends Controller
             ->where('doctor_id',Auth::user()->id)
             ->paginate(10);
             $pendingAppointments=Appointment::where('status', 'Reservada')
-            ->where('doctor_ id',Auth::user()->id)
+            ->where('doctor_id',Auth::user()->id)
             ->paginate(10);
             $oldAppointments=Appointment::whereIn('status',['Atendida','Cancelada'])
             ->paginate(10);
@@ -48,7 +48,7 @@ class AppointmentController extends Controller
             $oldAppointments=Appointment::whereIn('status',['Atendida','Cancelada'])
             ->paginate(10);
         }
-
+      
         // PATIENT
         
         return view('appointments.index',compact('confirmedAppointments', 'pendingAppointments','oldAppointments','role'));
@@ -134,7 +134,7 @@ class AppointmentController extends Controller
     }
     function showFormCancel(Appointment $appointment){
         if($appointment->status== 'Confirmada'){
-            return view('appointments.form-cancel',compact('appointment'));
+            return view('appointments.cancel',compact('appointment'));
         }
         return redirect()->route('appointments.index');
     }
