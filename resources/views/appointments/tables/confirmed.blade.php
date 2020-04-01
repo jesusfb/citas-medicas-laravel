@@ -46,7 +46,7 @@
           </td>
           <td>
             @if($role=='admin')
-              <a data-toggle="Ver detalles de la cita"class="btn btn-sm btn-success"href="{{route('appointments.show',$appointment->id)}}">Ver</a>
+              <a data-toggle="Ver detalles de la cita"class="btn btn-sm btn-primary"href="{{route('appointments.show',$appointment->id)}}">Ver</a>
             @endif
               <a  toggle-data="Cancelar esta cita" class="btn btn-sm btn-danger"href="{{route('appointments.show.form.cancel',$appointment->id)}}">Cancelar</a>
           </td>

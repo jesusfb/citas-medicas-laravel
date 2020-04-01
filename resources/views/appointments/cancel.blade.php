@@ -22,8 +22,33 @@
           <strong>Success!</strong> {{session('notification')}}
         </div>
        @endif
-      <P>Estás a punto de cancelar tu cita reservada para: {{$appointment->scheduled_date}} a horas: {{$appointment->scheduled_time_12}} con el Médico: {{$appointment->doctor->name}} en la especialidad: {{$appointment->specialty->name}} 
-      </P>
+       @if(auth()->user()->role =='patient')
+        <P>
+          Estás a punto de cancelar tu cita reservada con el Médico 
+          {{$appointment->doctor->name}} 
+          (especialidad{{$appointment->specialty->name}})
+           para el día {{$appointment->scheduled_date}} 
+           (hora {{$appointment->scheduled_time_12}}):
+       @elseif(auth()->user()->role =='doctor')
+        <P>
+          Estás a punto de cancelar tu cita con el paciente 
+          {{$appointment->patient->name}} 
+          (especialidad{{$appointment->specialty->name}})
+          para el día {{$appointment->scheduled_date}} 
+          (hora {{$appointment->scheduled_time_12}}):
+        </P>
+       @else 
+       {{-- ENTONCES ES ADMIN!!--}}
+        <P>
+          Estás a punto de cancelar la cita reservada por el paciente 
+          {{$appointment->patient->name}} 
+          para aser atendido por el medico: {{$appointment->patient->name}} 
+          (especialidad{{$appointment->specialty->name}})
+          para el día {{$appointment->scheduled_date}} 
+          (hora {{$appointment->scheduled_time_12}}):
+        </P>
+
+       @endif
     <form action="{{route('appointments.cancel',$appointment->id)}}" method="POST">
           @csrf
           <div class="form-group">

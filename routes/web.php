@@ -78,8 +78,8 @@ Route::middleware('auth')->group( function () {
     Route::post('appointments/{appointment}/cancel', 'AppointmentController@postCancel')
     ->name('appointments.cancel');
     Route::post('appointments/{appointment}/confirm', 'AppointmentController@confirmAppointment')
-    ->name('appointments.confirm');
-    
+    ->name('appointments.confirm'); //confirmar citas
+        
     
     //JSON
     Route::get('/specialties/{specialty}/doctors','Api\SpecialtyController@doctors')->name('specialties.doctors');

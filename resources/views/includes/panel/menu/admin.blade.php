@@ -10,7 +10,7 @@
   </li>
   <li class="nav-item">
     <a class="nav-link "  href="{{route('doctors.index')}}">
-      <i class="ni ni-single-02 text-orange"></i>  Medicos
+      <i class="ni ni-single-02 text-orange"></i>  Médicos
     </a>
   </li>
   <li class="nav-item">
@@ -20,6 +20,6 @@
   </li>
   <li class="nav-item">
     <a class="nav-link " href="{{route('appointments.index')}}">
-      <i class="ni ni-time-alarm text-orange"></i> Mis Citas
+      <i class="ni ni-time-alarm text-orange"></i> Citas médicas
     </a>
   </li>

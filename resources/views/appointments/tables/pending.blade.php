@@ -51,17 +51,24 @@
             @endif
             
             @if($role=='doctor' || $role=='admin')
-            <form action="{{route('appointments.confirm',$appointment->id)}}" method="POST" class="d-inline-block">
-              @csrf
-              <button data-toggle="tooltip" title= "Aprobar Cita Médica" type="submit" class="btn btn-success btn-sm">
-                <i class="ni ni-check-bold"></i></button>
-            @endif   
-            <form action="{{route('appointments.cancel',$appointment->id)}}" method="post"    class="d-inline-block">
+              <form action="{{route('appointments.confirm',$appointment->id)}}" method="POST"         class="d-inline-block">
+                @csrf
+                <button data-toggle="tooltip" title= "Aprobar Cita Médica" type="submit" class="btn     btn-success btn-sm">
+                  <i class="ni ni-check-bold"></i>
+                </button>
+              </form>  
+               {{-- rechazo de la cita si es un emdico---}}
+                <a class="btn btn-sm btn-danger" href="{{route('appointments.show.form.cancel',$appointment->id)}}">
+                  <i class="ni ni-fat-remove"></i>
+                </a>
+            @else 
+            {{--patient --}}
+              <form action="{{route('appointments.cancel',$appointment->id)}}" method="post"    class="d-inline-block">
                 @csrf
                 <button data-toggle="tooltip" title= "Cancelar Cita Médica" type="submit" class="btn btn-danger btn-sm">
-                  <i class="ni ni-fat-remove"></i>
                 </button>
-            </form>
+              </form>
+            @endif   
           </td>
         </tr>
         @endforeach
