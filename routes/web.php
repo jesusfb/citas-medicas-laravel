@@ -49,6 +49,11 @@ Route::middleware(['auth', 'admin'])->group( function () {
         Route::get('patients/{patient}/edit', 'Admin\PatientController@edit')->name('patients.edit');
         Route::put('patients/{patient}/update', 'Admin\PatientController@update')->name('patients.update');
         Route::delete('patients/{patient}/delete', 'Admin\PatientController@destroy')->name('patients.delete');
+
+
+        // REPORTES
+        Route::get('charts/appointments/line', 'Admin\ChartController@appointments')->name('charts.appointments');
+        Route::get('charts/doctor/bar', 'Admin\ChartController@doctors')->name('charts.doctors');
 });
     
 
