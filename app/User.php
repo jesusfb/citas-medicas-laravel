@@ -47,4 +47,26 @@ class User extends Authenticatable
     public function specialties(){
         return $this->belongsToMany(Specialty::class)->withTimestamps();
     }
+    /// $user->appointmentsAsPatient
+    /// $user->appointmentsAsDoctor
+
+    // 1 Medico atiende de 1 to N citas
+    // 1 cita es atendida por un medico
+    function asDoctorAppointments(){
+        return $this->hasMany(Appointment::class,'doctor_id');
+        // mediante este campo se va establercer la relacion con el medico
+    }
+    
+    function asPatientAppointments(){
+        return $this->hasMany(Appointment::class,'patient_id');
+        // mediante este campo se va establercer la relacion con el paciente
+    }
+    function attendedAppointments(){
+        return $this->asDoctorAppointments()->where('status', 'Atendida');
+    } 
+    function cancelledAppointments(){
+        return $this->asDoctorAppointments()->where('status', 'Cancelada');
+    }
+    
+    
 }

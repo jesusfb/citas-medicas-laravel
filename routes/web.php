@@ -54,6 +54,7 @@ Route::middleware(['auth', 'admin'])->group( function () {
         // REPORTES
         Route::get('charts/appointments/line', 'Admin\ChartController@appointments')->name('charts.appointments');
         Route::get('charts/doctor/bar', 'Admin\ChartController@doctors')->name('charts.doctors');
+        Route::get('charts/data/doctors', 'Admin\ChartController@doctorsData');
 });
     
 

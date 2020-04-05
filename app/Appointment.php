@@ -56,4 +56,5 @@ class Appointment extends Model
     function cancellation(){
         return $this->hasOne(CancelledAppointment::class);
     } 
+   
 }
