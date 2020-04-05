@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Appointment;
 use DB;
 use App\User;
+use Carbon\Carbon;
 
 class ChartController extends Controller
 {
@@ -28,21 +29,33 @@ class ChartController extends Controller
         return view('reports.appointments',compact('counts'));
     }
     function doctors(){
-       
-        return view('reports.doctors');
+       $now= Carbon::now();
+       $end= $now->format('Y-m-d');
+       $start=  $now->subYear()->format('Y-m-d');
+        return view('reports.doctors',compact('start', 'end'));
         
     }
-    function doctorsData(){
+    function doctorsData(Request $request){
         // withCOunt recibe una relacion, que es la cual nostros tenemos en User.php
         // los 3 medicos mas activos
+        $start= $request->start;
+        $end= $request->end;
         $doctors=User::doctors()
                     ->select('id', 'name')
                     // podriamos pasar las 2 restricciones que queremos contar como un array withCount(['attened , 'cancelledappointment'])
-                    ->WithCount('attendedAppointments') 
-                    ->WithCount('cancelledAppointments')
+                    ->WithCount([
+                        'attendedAppointments'=> 
+                        function($query) use ($start, $end){
+                        $query->whereBetween('scheduled_date',[$start, $end]);
+                    },
+                    'cancelledAppointments'=> 
+                        function($query) use ($start, $end){
+                        $query->whereBetween('scheduled_date',[$start, $end]);
+                    }
+                    ])
                     ->orderBy('attended_appointments_count', 'DESC')
                     //->having('cancelled_appointments_count', '>' ,'0')
-                    ->take(3)
+                    ->take(5)
                     ->get();
         $data=[];
         $data['categories']= $doctors->pluck('name'); // return array
