@@ -1,4 +1,4 @@
-FROM php:8.2.3-fpm
+FROM php:7.1-fpm
 
 RUN apt-get update && apt-get install -y \
     nginx \
@@ -32,6 +32,6 @@ COPY --chown=www-data:www-data . /var/www/html
 
 USER www-data
 
-EXPOSE 80 443
+EXPOSE 80
 
 
