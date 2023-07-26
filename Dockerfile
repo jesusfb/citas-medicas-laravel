@@ -31,7 +31,7 @@ RUN docker-php-ext-install gd
 RUN curl -sS <https://getcomposer.org/installer> | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Instalamos dependendencias de composer
-RUN composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --no-scripts
+RUN composer install
 
 # Copiamos todos los archivos de la carpeta actual de nuestra 
 # computadora (los archivos de laravel) a /var/www/
