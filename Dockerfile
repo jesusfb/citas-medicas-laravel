@@ -35,7 +35,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # ●追加
 RUN composer install
 
-COPY ./apache_file/000-default.conf /etc/apache2/sites-available/000-default.conf
+#COPY ./apache_file/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 RUN chmod 777 -R .
 
