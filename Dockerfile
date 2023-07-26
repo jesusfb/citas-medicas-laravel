@@ -24,8 +24,7 @@ RUN docker-php-ext-install pdo_mysql zip exif pcntl gd
 RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY entrypoint /usr/local/bin/entrypoint
-RUN chmod +x /usr/local/bin/entrypoint
+
 
 RUN usermod -u 1000 www-data
 
@@ -35,4 +34,4 @@ USER www-data
 
 EXPOSE 80 443
 
-ENTRYPOINT ["entrypoint"]
+
