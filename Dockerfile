@@ -1,4 +1,4 @@
-FROM php:8.0-apache
+FROM php:7.1-apache
 # FROM php:7.4-apache
 
 COPY . /var/www/html/
@@ -30,10 +30,13 @@ RUN apt-get install -y nodejs
 RUN chown -R www-data:www-data /var/www/html \
 && a2enmod rewrite
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# ●追加
-RUN composer install
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY composer.json composer.json
+RUN set -ex ; \
+    apt-get update ; \
+    apt-get install -y git zip ; \
+    composer -n validate --strict ; \
+    composer -n install --no-scripts --ignore-platform-reqs --no-dev
 
 #COPY ./apache_file/000-default.conf /etc/apache2/sites-available/000-default.conf
 
