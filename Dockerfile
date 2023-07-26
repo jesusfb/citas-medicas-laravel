@@ -1,7 +1,6 @@
 FROM composer:2.0 as build
 COPY . /app/
-RUN composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
-
+RUN composer install
 FROM php:7.1-apache-buster as production
 
 ENV APP_ENV=production
